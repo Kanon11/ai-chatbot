@@ -6,6 +6,8 @@ config();
 
 const app = express();
 app.use(express.json());
+// Middleware for validation result
+
 
 //remove it in production
 app.use(morgan("dev"))

@@ -5,6 +5,7 @@ import appRouter from './routes/index.js';
 config();
 const app = express();
 app.use(express.json());
+// Middleware for validation result
 //remove it in production
 app.use(morgan("dev"));
 app.use("/api/v1", appRouter);
