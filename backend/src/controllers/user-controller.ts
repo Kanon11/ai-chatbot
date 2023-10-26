@@ -1,7 +1,7 @@
 import { NextFunction, Request,Response } from "express";
 import User from "../models/User.js";
 
-import { hash } from "bcrypt";
+import { hash,compare } from "bcrypt";
 
 export const getAllUsers = async (req:Request,res:Response,next:NextFunction) => {
     try {
@@ -21,6 +21,22 @@ export const signUp = async (req: Request, res: Response, next: NextFunction) =>
         const user = new User({ name, email, password: hasPassword });
         await user.save();
         res.status(200).json({message:"OK",id:user._id.toString()})
+
+
+    } catch (error) {
+        console.log(error)
+        res.status(200).json({ message: "ERROR", cause: error.message });
+    }
+}
+export const logIn = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const { email, password } = req.body;
+        const user = await User.findOne({ email });
+
+        if (!user) {
+            res.status(401).json({message:"User not registered"})
+        }
+
 
 
     } catch (error) {
